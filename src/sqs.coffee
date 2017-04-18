@@ -21,7 +21,7 @@ module.exports = (robot) ->
     return
 
   sqs = new AWS.SQS {
-    region: process.env.HUBOT_AWS_SQS_REGION or process.env.AWS_REGION or 'us-east-1'
+    region: process.env.HUBOT_AWS_SQS_REGION or process.env.AWS_REGION or "us-east-1"
     accessKeyId: process.env.HUBOT_AWS_SQS_ACCESS_KEY_ID
     secretAccessKey: process.env.HUBOT_AWS_SQS_SECRET_ACCESS_KEY
   }
@@ -42,6 +42,10 @@ module.exports = (robot) ->
         robot.logger.error err
       else if data.Messages
         data.Messages.forEach (message) ->
+          if not message.MessageAttributes.user
+            return robot.logger.error "Username is missing from SQS message."
+          if not message.MessageAttributes.room
+            return robot.logger.error "Room is missing from SQS message."
           new Command({
               user: message.MessageAttributes.user.StringValue
               room: message.MessageAttributes.room.StringValue
