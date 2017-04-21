@@ -42,6 +42,8 @@ module.exports = (robot) ->
         robot.logger.error err
       else if data.Messages
         data.Messages.forEach (message) ->
+          if not message.MessageAttributes
+            return robot.logger.error "SQS message is missing user and room attributes."
           if not message.MessageAttributes.user
             return robot.logger.error "Username is missing from SQS message."
           if not message.MessageAttributes.room
