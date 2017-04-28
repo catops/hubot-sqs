@@ -39,7 +39,8 @@ module.exports = (robot) ->
       ]
     }, (err, data) ->
       if err?
-        robot.logger.error err
+        robot.logger.error "Unable to connect to AWS SQS!"
+        return robot.logger.error err
       else if data.Messages
         data.Messages.forEach (message) ->
           if not message.MessageAttributes
