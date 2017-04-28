@@ -1,7 +1,7 @@
 {
   "name": "hubot-sqs",
   "description": "Send AWS SQS messages to Hubot",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Chris Contolini <chris@contolini.com>",
   "license": "CC0",
   "keywords": [
